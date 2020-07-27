@@ -10,10 +10,8 @@ class SearchBar extends Component {
   };
 
   formSubmitHandler = (event) => {
-      event.preventDefault();
-
-    //   AIzaSyBsnkFf0H9AlyHojM1epDhPdWBUIOtjxIA
-      
+    event.preventDefault();
+    this.props.onFormSubmit(this.state.searchTerm);
   };
 
   render() {
