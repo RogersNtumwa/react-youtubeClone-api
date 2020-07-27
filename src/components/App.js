@@ -3,6 +3,7 @@ import axios from "axios";
 
 import SearchBar from "./SearchBar";
 import VideoList from "./VideoList";
+import VideoDeatils from "./VideoDetails";
 
 class App extends Component {
   constructor(props) {
@@ -10,8 +11,16 @@ class App extends Component {
 
     this.state = {
       videos: [],
+      selectedVideo: null,
     };
   }
+
+  selectedVideoHandler = (video) => {
+    // console.log("from the app", video);
+    this.setState({
+      selectedVideo: video,
+    });
+  };
 
   onTermSubmitHandler = async (searchTerm) => {
     const response = await axios.get(
@@ -28,14 +37,30 @@ class App extends Component {
 
     this.setState({
       videos: response.data.items,
+      selectedVideo: response.data.items[0],
     });
   };
 
+  componentDidMount() {
+    this.onTermSubmitHandler("cars");
+  }
   render() {
     return (
       <div className="ui container">
         <SearchBar onFormSubmit={this.onTermSubmitHandler} />
-        <VideoList videos={this.state.videos} />
+        <div className=" ui grid">
+          <div className="ui row">
+            <div className="eleven wide column">
+              <VideoDeatils video={this.state.selectedVideo} />
+            </div>
+            <div className="five wide column">
+              <VideoList
+                onVideoSelect={this.selectedVideoHandler}
+                videos={this.state.videos}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
