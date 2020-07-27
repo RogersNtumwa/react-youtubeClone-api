@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import SearchBar from "./SearchBar";
 import axios from "axios";
+
+import SearchBar from "./SearchBar";
+import VideoList from "./VideoList";
 
 class App extends Component {
   constructor(props) {
@@ -32,8 +34,8 @@ class App extends Component {
   render() {
     return (
       <div className="ui container">
-        <SearchBar onFormSubmit={this.onTermSubmitHandler} />i have{" "}
-        {this.state.videos.length} videos
+        <SearchBar onFormSubmit={this.onTermSubmitHandler} />
+        <VideoList videos={this.state.videos} />
       </div>
     );
   }
